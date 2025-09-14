@@ -6,7 +6,7 @@
 export {}; // Make this a module to satisfy TypeScript isolatedModules
 
 describe('Google Maps Script Loading Diagnostics', () => {
-  const mockApiKey = 'AIzaSyAumjMUm9DztYnTdpb7y-MPLkejifVMSdI';
+  const mockApiKey = 'mykey'; /** security violation*/
 
   beforeEach(() => {
     // Clean up any existing scripts and globals
