@@ -1,7 +1,6 @@
 import React from 'react';
 import { MessageBar } from '@fluentui/react-components';
 import GoogleMap from './GoogleMap';
-import GoogleMapSimple from './GoogleMapSimple';
 
 interface MapContainerProps {
   center?: { lat: number; lng: number };
@@ -31,12 +30,36 @@ export const MapContainer: React.FC<MapContainerProps> = ({
 
   return (
     <div className="map-container">
-      <GoogleMap
-        apiKey={apiKey!}
-        center={center}
-        zoom={zoom}
-        height="500px"
-      />
+      <div style={{
+        marginBottom: '1rem',
+        padding: '0.5rem 0',
+        borderBottom: '1px solid #e0e0e0'
+      }}>
+        <h2 style={{
+          margin: '0 0 0.25rem 0',
+          fontSize: '1.25rem',
+          fontWeight: '600',
+          color: '#2d8659'
+        }}>
+          Property Map
+        </h2>
+        <p style={{
+          margin: 0,
+          fontSize: '0.875rem',
+          color: '#666',
+          opacity: 0.8
+        }}>
+          Satellite view • Northern Ireland • 1 acre property
+        </p>
+      </div>
+      <div style={{ flex: 1, minHeight: 0 }}>
+        <GoogleMap
+          apiKey={apiKey!}
+          center={center}
+          zoom={zoom}
+          height="100%"
+        />
+      </div>
     </div>
   );
 };

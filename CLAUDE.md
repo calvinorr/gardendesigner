@@ -73,9 +73,12 @@ Key Agent OS commands:
 - API keys should be stored server-side for security
 
 ### Google Maps Integration
-- Primary mapping service using Google Maps JavaScript API
-- Requires API key configuration with domain restrictions
+- Primary mapping service using Google Maps JavaScript API (@googlemaps/js-api-loader)
+- Requires API key configuration with domain restrictions and React environment variables
 - Supports satellite imagery, custom overlays, markers, and drawing tools
+- **TypeScript Strict Mode**: Use non-null assertions (apiKey!) when API key existence is validated
+- **React Integration**: Implement proper DOM element waiting and error boundaries
+- **Debugging**: Use diagnostic components and console logging for troubleshooting
 - Performance optimized with Canvas/WebGL layers for many map elements
 
 ### Project Structure
@@ -100,6 +103,25 @@ Key Agent OS commands:
 
 ## Current Development Status
 
-- **Phase 1**: Core Garden Mapping (MVP) - Google Maps integration in progress
-- **Next Priorities**: Google Maps API setup, React component architecture, MongoDB configuration
-- **Architecture State**: Basic Express server and React app bootstrapped, awaiting feature implementation
+- **Phase 1**: Core Garden Mapping (MVP) - ✅ Google Maps integration completed
+- **Google Maps**: Working satellite view with property coordinates (54.651427935687735, -5.580687100975887)
+- **Next Priorities**: Map UI improvements, MongoDB configuration, plant cataloging system
+- **Architecture State**: React app with working Google Maps, Express server ready for API endpoints
+
+## Critical Debugging Lessons Learned
+
+### Google Maps TypeScript Integration Issues
+**Problem**: Maps appeared completely broken despite valid API key and proper setup
+**Root Cause**: TypeScript strict type checking prevented component execution with `'string | undefined'` errors
+**Solution**: Use non-null assertion operator (apiKey!) when existence is already validated
+
+**Key Debugging Insights**:
+- TypeScript compilation errors can silently break React components without obvious error messages
+- Always check TypeScript compilation status when components fail to render unexpectedly
+- Create minimal diagnostic components to isolate integration issues
+- Don't over-debug working solutions - the @googlemaps/js-api-loader was working correctly
+- React StrictMode double-mounting requires initialization guards in useEffect hooks
+
+**Time Impact**: This debugging session cost a full development day due to chasing red herrings instead of checking TypeScript compilation first
+
+**Prevention**: Always verify TypeScript compilation status before debugging complex integrations

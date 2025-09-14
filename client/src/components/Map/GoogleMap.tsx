@@ -78,7 +78,23 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
         const map = new google.maps.Map(mapRef.current, {
           center: center,
           zoom: zoom,
-          mapTypeId: 'satellite'
+          mapTypeId: 'satellite',
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.TOP_CENTER,
+          },
+          zoomControl: true,
+          streetViewControl: false,
+          fullscreenControl: true,
+          gestureHandling: 'auto',
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            }
+          ]
         });
 
         console.log('✅ Map created successfully');
@@ -87,7 +103,15 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
         new google.maps.Marker({
           position: center,
           map: map,
-          title: 'Property Center'
+          title: 'Property Center - 1 Acre Garden',
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: '#4caf50',
+            fillOpacity: 1,
+            strokeColor: '#2d8659',
+            strokeWeight: 3,
+            scale: 10,
+          },
         });
 
         console.log('✅ Marker added');
@@ -108,7 +132,7 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
     return () => {
       mapInstanceRef.current = null;
     };
-  }, [apiKey, center.lat, center.lng, zoom]);
+  }, [apiKey, center, zoom, height]);
 
   if (error) {
     return (
@@ -124,7 +148,7 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
     return (
       <div style={{
         width: '100%',
-        height: '500px', // Fixed height instead of percentage
+        height: height,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -157,7 +181,7 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
       ref={mapRef}
       style={{
         width: '100%',
-        height: '500px', // Fixed height instead of percentage
+        height: height,
         border: '1px solid #e0e0e0',
         borderRadius: '4px'
       }}
