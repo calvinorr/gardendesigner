@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Spinner, Text, MessageBar } from '@fluentui/react-components';
-import { Loader } from '@googlemaps/js-api-loader';
+import { googleMapsLoader } from '../../services/googleMapsLoader';
 
 // Extend window interface for Google Maps
 declare global {
@@ -61,15 +61,8 @@ export const GoogleMapWithDrawing: React.FC<GoogleMapWithDrawingProps> = ({
 
         console.log('✅ Map element found');
 
-        // Load Google Maps API with drawing and geometry libraries
-        console.log('📡 Loading Google Maps API with drawing tools...');
-        const loader = new Loader({
-          apiKey: apiKey,
-          version: 'weekly',
-          libraries: ['maps', 'drawing', 'geometry']
-        });
-
-        await loader.load();
+        // Load Google Maps API using centralized loader
+        await googleMapsLoader.load(apiKey);
         console.log('✅ Google Maps API loaded with drawing support');
 
         // Verify element still exists

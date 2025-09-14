@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Spinner, Text, MessageBar } from '@fluentui/react-components';
-import { Loader } from '@googlemaps/js-api-loader';
+import { googleMapsLoader } from '../../services/googleMapsLoader';
 
 // Extend window interface for Google Maps
 declare global {
@@ -57,15 +57,8 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
           offsetHeight: mapRef.current.offsetHeight
         });
 
-        // Load Google Maps API
-        console.log('📡 Loading Google Maps API...');
-        const loader = new Loader({
-          apiKey: apiKey,
-          version: 'weekly',
-          libraries: ['maps']
-        });
-
-        await loader.load();
+        // Load Google Maps API using centralized loader
+        await googleMapsLoader.load(apiKey);
         console.log('✅ Google Maps API loaded');
 
         // Verify element still exists
