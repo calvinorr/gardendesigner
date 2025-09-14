@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageBar } from '@fluentui/react-components';
 import GoogleMap from './GoogleMap';
+import GoogleMapSimple from './GoogleMapSimple';
 
 interface MapContainerProps {
   center?: { lat: number; lng: number };
@@ -8,10 +9,14 @@ interface MapContainerProps {
 }
 
 export const MapContainer: React.FC<MapContainerProps> = ({
-  center = { lat: 37.7749, lng: -122.4194 }, // Default to San Francisco - user can change later
-  zoom = 15
+  center = { lat: 54.651427935687735, lng: -5.580687100975887 }, // User's property coordinates
+  zoom = 18
 }) => {
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
+  // Debug logging
+  console.log('API Key loaded:', apiKey ? `${apiKey.substring(0, 10)}...` : 'NOT FOUND');
+  console.log('Map center:', center);
 
   if (!apiKey) {
     return (
@@ -27,10 +32,10 @@ export const MapContainer: React.FC<MapContainerProps> = ({
   return (
     <div className="map-container">
       <GoogleMap
-        apiKey={apiKey}
+        apiKey={apiKey!}
         center={center}
         zoom={zoom}
-        height="100%"
+        height="500px"
       />
     </div>
   );
